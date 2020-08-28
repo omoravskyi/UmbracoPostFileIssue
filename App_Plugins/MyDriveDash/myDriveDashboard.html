@@ -1,0 +1,13 @@
+<div id="myDriveDashboard" ng-controller="myDriveDashboardController" class="myDrive-dash">
+    <div class="row">
+        <form class="button-group">
+            <div class="import-products-container">
+                <small>Import</small>
+                <input file-model="myFile" class='button' id='0_import_btn'
+                       type="file" multiple accept=".zip">
+                <button ng-click="uploadFile()">upload me</button>
+                <div id="product_report_container_0"></div>
+            </div>
+        </form>
+    </div>
+</div>

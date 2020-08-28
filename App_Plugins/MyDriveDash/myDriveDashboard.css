@@ -1,0 +1,79 @@
+.my-drive-tabs {
+    font-size: 150%;
+    margin-bottom: 10px;
+}
+
+.my-drive-tabs>li>a {
+    padding: 0.5em;
+}
+
+.zip-upload-label {
+    background-color: #35c786;
+    color: white;
+    border-radius: 3px;
+    padding: 6px 14px 6px 14px;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 15px;
+    width: 142px;
+}
+
+.export-label {
+    background-color: #625a74;
+    color: white;
+    border-radius: 3px;
+    padding: 6px 14px 6px 14px;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 15px;
+    width: 142px;
+}
+
+.synchronize-label {
+    color: white;
+    border-radius: 3px;
+    padding: 6px 14px 6px 14px;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 15px;
+    width: 142px;
+}
+
+.synchronize-label.pull {
+    background-color: #fe5b57;
+}
+
+.synchronize-label.push {
+    background-color: #35c786;
+}
+
+form>div>.button {
+    opacity: 0;
+    max-width: 1px;
+    max-height: 1px;
+}
+
+.upload-text.-hidden {
+    opacity: 0;
+}
+
+.culture-selector {
+    width: 170px;
+    min-width: 0;
+}
+
+form.button-group {
+    display: inline;
+}
+
+form.button-group>div {
+    padding-bottom: 10px;
+}
+
+.culture-selector-container>span {
+    color: red;
+}
+
+.culture-selector.lngAlert {
+    border-color: red;
+}

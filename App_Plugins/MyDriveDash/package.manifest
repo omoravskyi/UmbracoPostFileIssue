@@ -1,0 +1,23 @@
+﻿{
+    //array of files we want to inject into the application on app_start
+	"dashboards":  [
+        {
+            "alias": "MyDrive",
+            "view":  "/App_Plugins/MyDriveDash/myDriveDashboard.html",
+            "sections":  [ "content" ],
+            "weight": -10,
+            "access": [
+                { "deny": "translator" },
+                { "grant": "admin" }
+            ]
+        }
+    ],
+    javascript: [
+		'~/App_Plugins/MyDriveDash/myDriveDashboard.Controller.js',
+		'~/App_Plugins/MyDriveDash/fileUploadDirective.js',
+    ],
+
+	css: [
+		'~/App_Plugins/MyDriveDash/myDriveDashboard.css'
+	]
+}
