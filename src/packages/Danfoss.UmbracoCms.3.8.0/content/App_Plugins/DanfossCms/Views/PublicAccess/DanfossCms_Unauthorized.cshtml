@@ -1,0 +1,131 @@
+﻿@model UnauthorizedViewModel
+@using Danfoss.UmbracoCms.Core.Models.ViewModels
+@{
+    string accessKeyValue = System.Configuration.ConfigurationManager.AppSettings["danfossCmsCore:accessKey"];
+    IEnumerable<string> accessKeys = accessKeyValue.Split(new char[] { ';' }, options: StringSplitOptions.RemoveEmptyEntries);
+}
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Unauthorized Public Access</title>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+            crossorigin="anonymous"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.css" rel="stylesheet" />
+    <style>
+        .container {
+            padding-top: 70px;
+        }
+
+        h1,
+        a,
+        .divider {
+            margin-bottom: 30px !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="mainContent" class="ui text container">
+        <h1 class="ui center aligned icon red header">
+            <i class="lock icon"></i>
+            <div class="content">
+                Unauthorized
+            </div>
+        </h1>
+        <p>
+            @Model.InformationText
+        </p>
+
+        <button class="ui labeled disabled loading icon button" onclick="login()">
+            <i class="cubes icon"></i> Login to Umbraco back office
+        </button>
+
+        @if (accessKeys.Any())
+        {
+            <div class="ui horizontal divider">
+                Or
+            </div>
+
+            <h2>Provide an access token</h2>
+            <div class="ui input" style="width:370px;">
+                <input id="tokenInput" type="text" class="">
+            </div>
+            <br /> <br />
+            <button class="ui button" onclick="applyAccessToken()">Apply access token</button>
+        }
+    </div>
+    <div class="ui text loader">@Model.RedirectingText</div>
+
+    <script>
+        var loginWindow;
+        var redirectCheckInterval;
+
+        function login() {
+            if (loginWindow){
+                loginWindow.focus();
+            }
+            else{
+                loginWindow = window.open("/umbraco/#/login", "LoginWindow", "height=500,width=700");
+            }
+
+            window.addEventListener('blur', function() {
+                redirectToHomeIfLoggedIn();
+            });
+        }
+
+        function setLoadingState() {
+            $('#mainContent').hide();
+            $('.ui.loader').addClass('active');
+        }
+
+        function redirectToHomeIfLoggedIn() {
+            var request = new XMLHttpRequest();
+
+            request.onreadystatechange = function () {
+                if (this.readyState != 4) return;
+
+                if (this.status == 200) {
+                    loginWindow = window.open("/umbraco/#/login", "LoginWindow", "height=500,width=700");
+                    if (loginWindow){
+                        loginWindow.close();
+                        clearInterval(redirectCheckInterval);
+                        window.location.href = '@Model.RedirectUrl';
+                    }
+                    else{
+                        clearInterval(redirectCheckInterval);
+                        window.location.href = '@Model.RedirectUrl';
+                    }
+
+                    setLoadingState();
+                }
+            };
+
+            request.open('GET', "/umbraco/danfosscms/tools/loginstatus", true);
+            request.send();
+        }
+
+        function applyAccessToken() {
+            var token = $('#tokenInput').val();
+            setTimeout(function () {
+                window.location.href = window.location.protocol + "//" + window.location.host + "?accessKey=" + token;
+            }, 1000)
+            setLoadingState();
+        }
+
+        redirectCheckInterval = setInterval(function () {
+        console.log('checking..');
+            redirectToHomeIfLoggedIn();
+        }, 4000);
+
+        window.onload = function(){
+            $('.ui.button').removeClass('loading');
+            $('.ui.button').removeClass('disabled');
+        }
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,70 @@
+﻿{   
+    propertyEditors: [      
+        {
+            alias: "Danfoss.MultinodeTreePicker",
+            name: "Danfoss Multinode Tree Picker",
+            editor: {
+                view: "~/App_Plugins/Danfoss.MultiNodePicker/multinodepicker.html",
+                hideLabel: false,
+                valueType: "TEXT"
+            },
+            group: "pickers",
+            prevalues:{
+                fields: [
+                    {
+                        label: "Node type",
+                        description: "",
+                        view: "treesource",
+                        key: "startNode",
+                        config: {
+                            "idType": "udi"
+                        }
+                    },
+                    {
+                        label: "Allow items of type",
+                        description: "Separate with comma",
+                        view: "textstring",
+                        "key": "filter"
+                    },
+                    {
+                        label: "Minimum number of items",
+                        description: "",
+                        view: "number",
+                        "key": "minNumber"
+                    },
+                    {
+                        label: "Maximum number of items",
+                        description: "",
+                        view: "number",
+                        "key": "maxNumber"
+                    },
+                    {
+                        label: "Display selected",
+                        description: "Displays selected items in content tree",
+                        view: "boolean",
+                        "key": "displaySelected"
+                    },
+                    {
+                        label: "Show open button (this feature is in preview!)",
+                        description: "Opens the node in a dialog",
+                        view: "boolean",
+                        "key": "showOpenButton"
+                    }]
+            },
+            defaultConfig: {
+                "multiPicker": "1",
+                "showOpenButton": "0",
+                "showEditButton": "0",
+                "showPathOnHover": "0",
+                "displaySelected": "0",
+                "idType": "udi"
+            }
+        }
+    ],
+    javascript: [
+        '~/App_Plugins/Danfoss.MultiNodePicker/multinodepicker.controller.js'
+    ]
+}
+
+
+
